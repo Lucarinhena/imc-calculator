@@ -1,0 +1,53 @@
+Skip to content
+Search or jump to…
+Pull requests
+Issues
+Codespaces
+Marketplace
+Explore
+ 
+@Lucarinhena 
+thiagog3
+/
+github-page
+Public
+Fork your own copy of thiagog3/github-page
+Code
+Issues
+Pull requests
+Actions
+Projects
+Security
+Insights
+github-page/.github/workflows/build.yml
+@thiagog3
+thiagog3 feat(): add workflow
+Latest commit 1253354 on May 14, 2021
+ History
+ 1 contributor
+24 lines (22 sloc)  481 Bytes
+
+name: deploy
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '14.x'
+      - name: Build web-app
+        run: |
+          npm ci
+          npm run build
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build
